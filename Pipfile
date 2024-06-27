@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+asgiref = "==3.7.2"
+django = "~=5.0.4"
+sqlparse = "==0.5.0"
+python-decouple = "==3.8"
+django-taggit = "==5.0.1"
+markdown = "==3.6"
+psycopg = "==3.1.18"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

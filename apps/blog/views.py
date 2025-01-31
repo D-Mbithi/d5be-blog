@@ -1,4 +1,4 @@
-from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.shortcuts import get_object_or_404, render
 
 from .forms import CategoryForm, PostForm
 from .models import Post
@@ -6,7 +6,7 @@ from .models import Post
 
 # Create your views here.
 def post_list(request):
-    posts = get_list_or_404(Post)
+    posts = Post.objects.select_related("category", "author")
     template = "blog/blog_list.html"
     context = {"posts": posts}
 

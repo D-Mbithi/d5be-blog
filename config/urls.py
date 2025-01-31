@@ -9,3 +9,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("blog/", include("apps.blog.urls", namespace="blog")),
 ]
+
+urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]

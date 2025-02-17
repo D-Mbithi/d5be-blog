@@ -255,4 +255,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-staticroot
+staticroot/
+.idea/

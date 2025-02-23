@@ -18,7 +18,7 @@ class Post(models.Model):
     """Blog post model."""
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=250, unique="publish")
+    slug = models.SlugField(max_length=250, unique_for_date="publish")
     body = models.TextField()
     created_at = models.DateTimeField()
     updated = models.DateTimeField(auto_now=True)
@@ -50,7 +50,10 @@ class Post(models.Model):
         return str(self.title)
 
     def get_absolute_url(self):
-        return reverse("blog:post-detail", args=[self.id])
+        return reverse(
+            "blog:post-detail",
+            args=[self.publish.year, self.publish.month, self.publish.day, self.slug],
+        )
 
     def save(self, *args, **kwargs):
         if self.status == "PB" and self.publish is None:

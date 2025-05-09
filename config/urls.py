@@ -8,6 +8,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.post_list, name="index"),
     path("blog/", include("apps.blog.urls", namespace="blog")),
+    path('', include('admin_soft.urls')),
 ]
 
 urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]

@@ -1,14 +1,30 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
+from django.views.generic.list import ListView
 
 from .forms import CategoryForm, PostForm
 from .models import Post
 
 
 # Create your views here.
+class PostListView(ListView):
+    queryset = Post.published.all()
+    template_name = 'blog/post_list_class.html'
+    paginate_by = 10
+    context_object_name = 'posts'
 def post_list(request):
-    posts = Post.objects.filter(status="PB")
-    print(posts)
-    template = "index.html"
+    posts_list = Post.objects.filter(status="PB")
+
+    paginator = Paginator(posts_list, 9)
+    page = request.GET.get("page")
+    try:
+        posts = paginator.get_page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    template = "blog/post_list.html"
     context = {"posts": posts}
     return render(request, template, context)
 

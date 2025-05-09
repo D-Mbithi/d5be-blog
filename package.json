@@ -4,5 +4,15 @@
   },
   "dependencies": {
     "flowbite": "^2.5.2"
-  }
+  },
+  "name": "d5be-blog",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tailwindcss -i ./static/src/input.css -o ./static/css/styles.css --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

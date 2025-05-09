@@ -1,10 +1,11 @@
 from django.shortcuts import get_list_or_404, render
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from apps.blog.models import Category, Post
 
 
 def index(request):
-    posts = get_list_or_404(Post)
+    posts = Post.objects.all().order_by("-published")
     categories = get_list_or_404(Category)
     template = "index.html"
     context = {"posts": posts, "categories": categories}

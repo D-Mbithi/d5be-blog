@@ -13,6 +13,9 @@ class PublishedManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(status=Status.PUBLISHED)
 
+    # def get_published(self):
+    #     return self.get_queryset().filter(is_featured=True).order_by("-publish")
+
 
 class Post(models.Model):
     """Blog post model."""
@@ -28,7 +31,7 @@ class Post(models.Model):
     )
     status = models.CharField(
         max_length=2,
-        choices=Status,
+        choices=Status.choices,
         default=Status.DRAFT,
     )
     author = models.ForeignKey(
@@ -36,6 +39,7 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name="posts",
     )
+    is_featured = models.BooleanField(default=False)
 
     objects = models.Manager()
     published = PublishedManager()
@@ -52,7 +56,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse(
             "blog:post-detail",
-            args=[self.publish.year, self.publish.month, self.publish.day, self.slug],
+            args=[self.publish.year, self.publish.month, self.publish.day, self.slug,],
         )
 
     def save(self, *args, **kwargs):

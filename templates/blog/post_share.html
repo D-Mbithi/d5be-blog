@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+  {{ post.title }} shared.
+{% endblock %}
+
+{% block content %}
+  <section class="inset-1/3">
+    {% if sent %}
+      <h1>E-mail successfully sent</h1>
+      <p>"{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}.</p>
+    {% else %}
+      <h1 class="fs-5">Share "{{ post.title }}" by e-mail</h1>
+      <form method="post" class="px-5 py-10 rounded-3">
+        {% for field in form %}
+          <div class="flex flex-column gap-y-2">
+            <label>{{ field.label }}</label>
+            {{ field|add_class:"" }}
+          </div>
+        {% endfor %}
+        {% csrf_token %}
+        <input class="px-5 py-2 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500" type="submit" value="Send e-mail">
+      </form>
+    {% endif %}
+  </section>
+{% endblock %}

@@ -17,6 +17,7 @@ django-silk = "*"
 django-model-utils = "*"
 django-environ = "*"
 django-seed = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
 

@@ -1,34 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
-    <div class="flex justify-between container gap-10 mx-auto">
-        <div class="w-full lg:w-8/12 md:w-9/12">
-            <div class="mt-6">
-                <div class="px-10 py-6 bg-white rounded-lg shadow-md">
-                    <div class="flex justify-between items-center">
-                        <span class="font-light text-gray-600">Jun 1,
-                        2020</span>
-                        <a href="#"
-                           class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">{{ post.category }}</a>
-                    </div>
-                    <div class="mt-2">
-                        <a href="#" class="text-2xl text-gray-700 font-bold hover:underline">{{ post.title }}</a>
-                        <p class="mt-2 text-gray-600 leading-loose">{{ post.body|linebreaks }}</p>
-                    </div>
-                    <div class="flex justify-between items-center mt-4">
-                        <div>
-                            <a href="#" class="flex items-center">
-                                <img src="{% static "imgs/profile.jpg" %}"
-                                     alt="avatar"
-                                     class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block">
-                                <h1 class="text-gray-700 font-bold hover:underline">{{ post.author.username|title }}</h1>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="lg:w-4/12 md:w-3/12"></div>
+<article class="mx-auto max-w-7xl px-6 lg:px-8">
+  <div class="mb-5">
+    <img class="w-full rounded-t-lg" src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2FiaW58ZW58MHx8MHx8fDA%3D" alt="">
+  </div>
+  <section class="w-3/4 mx-auto mb-6">
+    <div class="flex justify-between items-center">
+      <span class="font-light text-gray-600">Jun 1, 2020</span>
+      <a href="#" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">
+        {{ post.category }}
+      </a>
     </div>
+    <div class="mt-2">
+      <a href="#" class="text-2xl text-gray-700 font-bold hover:underline">{{ post.title }}</a>
+      <div class="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl xl:prose-2xl">
+        {{ post.body|linebreaks }}
+      </div>
+    </div>
+    <div class="flex justify-between items-center mt-4">
+      <div>
+        <a href="#" class="flex items-center">
+          <img src="{% static "imgs/profile.jpg" %}" alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full hidden sm:block"/>
+          <h1 class="text-gray-700 font-bold hover:underline">{{ post.author|title }}</h1>
+        </a>
+      </div>
+      <div>
+        <a class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500" href="{% url "blog:post_share" post.id %}">Share Post</a>
+      </div>
+    </div>
+  </section>
+</article>
 {% endblock %}

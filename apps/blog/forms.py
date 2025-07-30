@@ -18,3 +18,9 @@ class CategoryForm(forms.ModelForm):
         fields = [
             "name",
         ]
+
+class EmailPostForm(forms.Form):
+    name = forms.CharField()
+    email = forms.EmailField()
+    to = forms.EmailField()
+    comments = forms.CharField(required=False, widget=forms.Textarea)

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "silk",
     "django_seed",
+    "widget_tweaks",
     "django_extensions",
     "apps.users.apps.UsersConfig",
     "apps.blog.apps.BlogConfig",

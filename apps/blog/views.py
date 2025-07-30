@@ -1,8 +1,9 @@
+from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 
-from .forms import CategoryForm, PostForm
+from .forms import CategoryForm, PostForm, EmailPostForm
 from .models import Post
 
 
@@ -78,7 +79,6 @@ def post_delete(request, post_id):
         post = get_object_or_404(Post, id=post_id)
         post.delete()
 
-
 def category_create(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
@@ -89,5 +89,35 @@ def category_create(request):
     template = "blog/category_create.html"
     context = {
         "form": form,
+    }
+    return render(request, template, context)
+
+def post_share(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    sent = False
+
+    if request.method == "POST":
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            cd = form.cleaned_data
+            post_url = request.build_absolute_uri(post.get_absolute_url())
+            subject = f"{cd['name']} ({cd['email']}) recommends you to read the following article { post.title }"
+            message = f"Read {post.title} at {post_url}\n\n" f"{cd['name']}\'s comments: {cd['comments']}"
+
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=None,
+                recipient_list=[cd['to']]
+            )
+            sent = True
+    else:
+        form = EmailPostForm()
+    template = "blog/post_share.html"
+    context = {
+        "form": form,
+        "post": post,
+        "sent": sent,
     }
     return render(request, template, context)

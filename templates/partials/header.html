@@ -1,13 +1,13 @@
 <nav class="flex justify-between items-center container mx-auto">
     <div>
-        <a class="text-2xl font-semibold" href="/">Django Blog</a>
+        <a class="text-4xl font-semibold" href="/">Travel Blog</a>
     </div>
     <ul class="flex gap-5 text-sm font-semibold uppercase text-slate-500">
         <li>
-            <a href="/">Home</a>
+            <a href="/" class="fw-light">Home</a>
         </li>
         <li>
-            <a href="#">Blog</a>
+            <a href="{% url 'blog:post-list' %}">Blog</a>
         </li>
         <li>
             <a href="#">Category</a>
@@ -17,7 +17,7 @@
         </li>
     </ul>
     <ul class="flex gap-5">
-        <a href="#">Login</a>
-        <a href="#">Signup</a>
+        <a href="#" class="text-slate-800 px-4 py-1 border-b border-b-slate-800">Login</a>
+        <a href="#" class="border border-slate-800 rounded px-4 py-1 hover:bg-slate-700 hover:text-slate-100">Signup</a>
     </ul>
 </nav>

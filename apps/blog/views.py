@@ -1,9 +1,10 @@
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic.list import ListView
+from django.urls import reverse
 
-from .forms import CategoryForm, PostForm, EmailPostForm
+from .forms import CategoryForm, PostForm, EmailPostForm, CommentForm
 from .models import Post
 
 
@@ -38,8 +39,10 @@ def post_detail(request, year, month, day, post):
         publish__month=month,
         publish__day=day,
     )
+    comments = post.comments.filter(active=True)
+    form = CommentForm()
     template = "blog/post_detail.html"
-    context = {"post": post}
+    context = {"post": post, "form": form, "comments": comments,}
     return render(request, template, context)
 
 
@@ -121,3 +124,22 @@ def post_share(request, post_id):
         "sent": sent,
     }
     return render(request, template, context)
+
+
+def post_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+
+    return redirect(reverse(
+        "blog:post-detail",
+        args=[
+            post.publish.year,
+            post.publish.month,
+            post.publish.day,
+            post.slug]
+    ))

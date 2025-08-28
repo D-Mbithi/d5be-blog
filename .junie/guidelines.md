@@ -1,191 +1,119 @@
-# Development Guidelines for d5be-blog
+d5be-blog: Development Guidelines (Project-Specific)
 
-This document provides guidelines and instructions for developing and maintaining the d5be-blog project.
+This document records project-specific practices that help advanced contributors get productive quickly and avoid common pitfalls. It assumes familiarity with Django and typical tooling. Use it as a living note for decisions and verified workflows.
 
-## Build/Configuration Instructions
+1. Build / Configuration
+- Python environment
+  - The repo ships with both Pipenv and requirements.txt. Pipenv is preferred in development.
+  - Recommended:
+    - pip install pipenv
+    - pipenv install
+    - pipenv shell
+  - Alternative:
+    - pip install -r requirements.txt
+- Environment variables
+  - Settings are configured via django-environ. A .env file at project root is required because SECRET_KEY is accessed as env('SECRET_KEY') with no default and will raise if missing.
+  - Minimal .env for local/dev and tests:
+    - SECRET_KEY=any-non-empty-string
+    - DEBUG=True
+- Database
+  - SQLite is the default (config/settings.py -> db.sqlite3). No extra services required.
+  - Migrations are present for apps.users and apps.blog; tests run against a transient in-memory test DB and apply migrations automatically.
+- Static & media
+  - STATICFILES_DIRS points at ./static and STATIC_ROOT at ./staticroot.
+  - MEDIA_ROOT is ./media.
+- Frontend (Tailwind)
+  - npm install
+  - npm run dev (watches and compiles static/css/styles.css from static/src/input.css via tailwind.config.js)
+- Admin & profiling additions
+  - django-admin-soft-dashboard is enabled for a custom admin theme.
+  - django-silk is installed and middleware is enabled; when the dev server runs, profiling is available at /silk/.
 
-### Python Environment Setup
+2. Testing: How to run, add, and execute
+- Important gotchas for this repo
+  - SECRET_KEY must be available or tests will error during settings load. Provide it via .env as shown above.
+  - The blog app contains both a legacy tests.py and may also contain a tests/ directory if you add one. If you create a tests/ directory, add an empty __init__.py so Django/pytest/unittest discovery treats it as a package.
+  - Custom user model (apps.users.models.CustomUser) uses email as USERNAME_FIELD and has no username. Always use get_user_model() in tests.
+- Running tests
+  - Run all tests:
+    - python manage.py test
+  - Run tests for the blog app legacy module:
+    - python manage.py test apps.blog.tests
+  - Run a specific test module inside a tests/ package (recommended precision):
+    - python manage.py test apps.blog.tests.test_smoke
+  - Use -v 2 for verbose output.
+- Adding a new test (verified example)
+  - Pattern 1: single-module tests (legacy): apps/blog/tests.py
+    - Tests in this file are auto-discovered when you run python manage.py test apps.blog.tests.
+  - Pattern 2: package tests: apps/blog/tests/
+    - Create the directory and add __init__.py in it. Place files like test_something.py.
+  - Minimal model behavior test (works as of 2025-08-10)
+    - Verified by running: python manage.py test apps.blog.tests.test_smoke -v 2
+    - Example content used during verification (this is safe to replicate in a new file):
+      
+      from django.test import TestCase
+      from django.utils import timezone
+      from django.contrib.auth import get_user_model
+      
+      from apps.blog.models import Post, Category, Status
+      
+      class BlogSmokeTests(TestCase):
+          def setUp(self):
+              User = get_user_model()
+              self.user = User.objects.create_user(
+                  email="smoke@example.com", password="smokepass"
+              )
+              self.category = Category.objects.create(name="SmokeCat")
+          
+          def test_post_publish_date_set_on_publish(self):
+              post = Post.objects.create(
+                  title="Smoke Post",
+                  slug="smoke-post",
+                  body="Body",
+                  created_at=timezone.now(),
+                  category=self.category,
+                  author=self.user,
+                  status=Status.DRAFT,
+              )
+              self.assertIsNone(post.publish)
+              post.status = Status.PUBLISHED
+              post.save()
+              self.assertIsNotNone(post.publish)
+  - Notes about Post model constraints
+    - slug has unique_for_date='publish'. Creating DRAFT posts with None publish is fine; uniqueness is evaluated when publish is set. The save() override will set publish to timezone.now() when status == PUBLISHED and publish is None, which is what the test exercises.
 
-The project uses both Pipenv and requirements.txt for dependency management. Pipenv is recommended for development.
+3. Additional Development Information
+- Project structure
+  - apps/
+    - users/: Custom user model with email as primary login; Profile related via OneToOne. Use get_user_model() consistently to avoid coupling.
+    - blog/: Post/Category/Comment with PublishedManager and Status enum. Post.save() auto-sets publish on first transition to published.
+  - config/: Django settings/urls; settings import .env via django-environ; TIME_ZONE is Africa/Nairobi.
+  - templates/, static/, staticroot/, media/: standard layout; Tailwind is configured via tailwind.config.js.
+- Email settings
+  - EMAIL_BACKEND is configured to console backend in settings for development. Sending emails in dev prints to stdout.
+- Admin/profiling
+  - Admin Soft dashboard is installed and configured via admin_soft.apps.AdminSoftDashboardConfig.
+  - Silk profiling middleware is enabled; visit /silk/ after running the dev server to inspect requests and queries.
+- Common pitfalls
+  - Missing .env leads to ImproperlyConfigured: Set the SECRET_KEY environment variable.
+  - If you create a tests/ directory in any app, ensure there is an __init__.py to avoid discovery edge cases when mixing tests.py and tests/ package.
+  - Always create Post with created_at set; the field is required. publish may be left None for drafts and will be set on publish transition.
+- Useful commands
+  - Database setup (dev): python manage.py migrate
+  - Run server: python manage.py runserver
+  - Seed data (django-seed installed): see django-seed docs; not pre-wired with custom commands here.
 
-#### Using Pipenv (Recommended)
+Quickstart (tested 2025-08-14)
+- Python deps (preferred): pip install pipenv && pipenv install && pipenv shell
+- Alt: pip install -r requirements.txt
+- Frontend: npm install && npm run dev (optional during backend-only work)
+- Run dev server: python manage.py runserver
+- Run all tests with inline env (no .env file needed): SECRET_KEY=dev DEBUG=True python manage.py test -v 2
 
-1. Install Pipenv if you don't have it:
-   ```bash
-   pip install pipenv
-   ```
+Appendix: Verified Test Run Transcript (2025-08-14)
+- Command executed: SECRET_KEY=devsecret DEBUG=True python manage.py test apps.blog.tests -v 2
+- Result: Ran 1 test; OK; migrations applied to in-memory test DB; no system check issues.
 
-2. Install dependencies:
-   ```bash
-   pipenv install
-   ```
-
-3. Activate the virtual environment:
-   ```bash
-   pipenv shell
-   ```
-
-#### Using pip and requirements.txt (Alternative)
-
-```bash
-pip install -r requirements.txt
-```
-
-### Environment Variables
-
-The project uses django-environ to manage environment variables. Create a `.env` file in the project root with the following variables:
-
-```
-SECRET_KEY=your_secret_key_here
-DEBUG=True
-```
-
-### Database Setup
-
-The project uses SQLite by default. To set up the database:
-
-```bash
-python manage.py migrate
-```
-
-### Frontend Setup
-
-The project uses Tailwind CSS for styling:
-
-1. Install Node.js dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Run Tailwind CSS compilation:
-   ```bash
-   npm run dev
-   ```
-
-### Running the Development Server
-
-```bash
-python manage.py runserver
-```
-
-## Testing Information
-
-### Running Tests
-
-To run all tests:
-
-```bash
-python manage.py test
-```
-
-To run tests for a specific app:
-
-```bash
-python manage.py test apps.blog.tests
-```
-
-### Creating New Tests
-
-Tests should be placed in a `tests.py` file within each app directory or in a `tests` directory if there are multiple test files.
-
-#### Example Test
-
-Here's an example test for the Post model in the blog app:
-
-```python
-from django.test import TestCase
-from django.utils import timezone
-from django.contrib.auth import get_user_model
-
-from .models import Post, Category, Status
-
-
-class PostModelTests(TestCase):
-    def setUp(self):
-        # Create a test user
-        User = get_user_model()
-        self.user = User.objects.create_user(
-            email="test@example.com",
-            password="testpassword"
-        )
-        
-        # Create a test category
-        self.category = Category.objects.create(name="Test Category")
-    
-    def test_post_publish_date_set_on_publish(self):
-        """Test that publish date is set when status changes to published"""
-        # Create a draft post
-        post = Post.objects.create(
-            title="Test Post",
-            slug="test-post",
-            body="This is a test post body",
-            created_at=timezone.now(),
-            category=self.category,
-            author=self.user,
-            status=Status.DRAFT
-        )
-        
-        # Verify publish date is None
-        self.assertIsNone(post.publish)
-        
-        # Change status to published and save
-        post.status = Status.PUBLISHED
-        post.save()
-        
-        # Verify publish date is set
-        self.assertIsNotNone(post.publish)
-```
-
-### Test Database
-
-When running tests, Django creates a test database, which is separate from your development database. This ensures that your tests don't affect your development data.
-
-## Additional Development Information
-
-### Project Structure
-
-- `apps/`: Contains Django applications
-  - `blog/`: Blog application
-  - `users/`: User authentication and profiles
-- `config/`: Project configuration
-- `static/`: Static files
-- `templates/`: HTML templates
-
-### Custom User Model
-
-The project uses a custom user model defined in `apps.users.models.CustomUser`. Always use `get_user_model()` to reference the user model in your code.
-
-### Database Migrations
-
-After making changes to models, create and apply migrations:
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-### Frontend Development
-
-The project uses Tailwind CSS for styling. The CSS is compiled from `static/src/input.css` to `static/css/styles.css`.
-
-To watch for changes and recompile automatically:
-
-```bash
-npm run dev
-```
-
-### Admin Interface
-
-The project uses django-admin-soft-dashboard for a custom admin interface.
-
-### Performance Monitoring
-
-The project includes django-silk for performance profiling. Access it at `/silk/` when the development server is running.
-
-### Code Style
-
-The project follows standard Django conventions:
-- Class names use CamelCase
-- Function and variable names use snake_case
-- Models have a descriptive docstring
-- Custom managers are used for common queries (e.g., PublishedManager)
+Maintenance Notes
+- Keep this document updated when test discovery conventions change (e.g., migrating fully to tests/ packages).
+- If adding CI, ensure the workflow creates a .env (at least SECRET_KEY) or injects SECRET_KEY via environment before running tests.

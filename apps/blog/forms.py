@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Category, Post
+from .models import Category, Comment, Post
 
 
 class PostForm(forms.ModelForm):
@@ -24,3 +24,12 @@ class EmailPostForm(forms.Form):
     email = forms.EmailField()
     to = forms.EmailField()
     comments = forms.CharField(required=False, widget=forms.Textarea)
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['name', 'email', 'body']
+        widgets = {
+            'body': forms.Textarea(attrs={'rows': 4}),
+        }

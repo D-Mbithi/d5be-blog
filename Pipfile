@@ -10,14 +10,14 @@ sqlparse = "==0.5.0"
 django-taggit = "==5.0.1"
 markdown = "==3.6"
 psycopg = "==3.1.18"
-django-extensions = "*"
 pillow = "*"
 django-admin-soft-dashboard = "*"
 django-silk = "*"
 django-model-utils = "*"
-django-environ = "*"
 django-seed = "*"
 django-widget-tweaks = "*"
+django-extensions = "*"
+django-environ = "*"
 
 [dev-packages]
 

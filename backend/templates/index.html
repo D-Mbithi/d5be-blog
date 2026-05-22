@@ -1,0 +1,519 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Home - Flavor Fusion | Gourmet Recipes & Culinary Inspiration
+{% endblock title %}
+
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-purple-50 via-white to-zinc-100 pt-16 pb-20 overflow-hidden">
+  <div
+    class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmMWY1ZmEiIGZpbGwtb3BhY2l0eT0iMC40Ij48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20">
+  </div>
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div class="max-w-2xl text-center lg:text-left animate-slide-up">
+        <span
+          class="inline-block bg-red-100 text-red-600 px-4 py-2 rounded-full text-sm font-medium mb-6 shadow-lg animate-bounce-gentle">
+          <i class="fas fa-star mr-1"></i> Featured Recipe
+        </span>
+        <h2 class="text-4xl md:text-6xl font-bold text-zinc-900 mb-6 leading-tight">
+          Mediterranean Quinoa Bowl with <span class="gradient-text">Lemon Herb Dressing</span>
+        </h2>
+        <p class="text-lg text-zinc-600 mb-8 leading-relaxed">
+          A vibrant, healthy bowl packed with fresh vegetables, protein-rich quinoa, and a zesty lemon herb dressing
+          that transports you to the Mediterranean coast.
+        </p>
+        <div class="flex flex-col sm:flex-row sm:justify-start justify-center gap-4">
+          <button @click="showVideo = true"
+            class="border-2 border-zinc-300 text-zinc-700 px-8 py-4 rounded-xl hover:bg-white hover:border-purple-400 transition-all duration-300 transform hover:scale-105 font-medium shadow-lg flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-purple-300">
+            <i class="fas fa-play-circle"></i>
+            <span>Watch Video</span>
+          </button>
+          <a href="#latest"
+            class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-8 py-4 rounded-xl hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 transform hover:scale-105 font-medium shadow-xl flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-purple-300">
+            <i class="fas fa-book-open"></i>
+            <span>Read Recipe</span>
+          </a>
+        </div>
+
+        <div class="mt-8 flex items-center justify-center lg:justify-start space-x-6 text-sm text-zinc-600">
+          <span class="flex items-center space-x-2"><i class="fas fa-clock text-purple-600"></i><span>25
+              mins</span></span>
+          <span class="flex items-center space-x-2"><i class="fas fa-fire text-orange-500"></i><span>Easy</span></span>
+          <span class="flex items-center space-x-2"><i class="fas fa-user-friends text-fuchsia-500"></i><span>2
+              servings</span></span>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="absolute -top-6 -left-6 w-20 h-20 bg-fuchsia-500/10 rounded-full blur-2xl"></div>
+        <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-purple-600/10 rounded-full blur-2xl"></div>
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl ring-1 ring-zinc-200">
+          <img
+            src="https://images.unsplash.com/photo-1671058844328-fecbd3d61dc0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxNZWRpdGVycmFuZWFuJTIwcXVpbm9hJTIwYm93bCUyMHBsYXRlZCUyMHRvcCUyMHZpZXclMjB2aWJyYW50fGVufDB8MHx8fDE3NTg5NDg5MDZ8MA&ixlib=rb-4.1.0&q=80&w=1200"
+            alt="Mediterranean quinoa bowl with lemon herb dressing"
+            class="w-full h-[360px] md:h-[440px] object-cover will-change-transform" loading="eager" decoding="async"
+            fetchpriority="high">
+          <!-- Floating badges -->
+          <div
+            class="absolute top-3 left-3 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full text-xs font-medium shadow">
+            <i class="fas fa-lemon text-yellow-500 mr-1"></i> Fresh Lemon
+          </div>
+          <div
+            class="absolute bottom-3 right-3 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full text-xs font-medium shadow">
+            <i class="fas fa-seedling text-green-600 mr-1"></i> Healthy
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div x-show="showVideo" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
+    <div @click="showVideo=false" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl w-[92%] md:w-[800px] overflow-hidden animate-fade-in">
+      <button @click="showVideo=false"
+        class="absolute top-3 right-3 w-9 h-9 bg-white text-zinc-700 rounded-full shadow hover:bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-300 flex items-center justify-center">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="aspect-video w-full bg-zinc-100 shimmer"></div>
+      <iframe x-show="showVideo" class="w-full aspect-video"
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1" title="Recipe Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<main id="main">
+  <!-- Featured Recipes -->
+  <section id="latest" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 animate-fade-in">
+        <div>
+          <h2 class="text-4xl font-bold text-zinc-900">Latest Recipes</h2>
+          <p class="text-zinc-600 mt-1">Freshly plated ideas to elevate your next meal.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex gap-2 overflow-x-auto max-w-full no-scrollbar" x-data>
+            <button @click="activeFilter='All'"
+              :class="activeFilter==='All' ? 'bg-purple-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'"
+              class="px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all">All</button>
+            <button @click="activeFilter='Vegetarian'"
+              :class="activeFilter==='Vegetarian' ? 'bg-purple-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'"
+              class="px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all"><i
+                class="fas fa-leaf mr-1 text-green-600"></i>Vegetarian</button>
+            <button @click="activeFilter='Gluten-Free'"
+              :class="activeFilter==='Gluten-Free' ? 'bg-purple-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'"
+              class="px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all"><i
+                class="fas fa-wheat-awn mr-1 text-blue-600"></i>Gluten-Free</button>
+            <button @click="activeFilter='Dessert'"
+              :class="activeFilter==='Dessert' ? 'bg-purple-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'"
+              class="px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all"><i
+                class="fas fa-ice-cream mr-1 text-pink-600"></i>Dessert</button>
+          </div>
+          <a href="#"
+            class="text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-2 group transition-all duration-300 ml-2">
+            <span>View All</span>
+            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Recipe Card 1 -->
+        <article x-show="activeFilter==='All' || activeFilter==='Vegetarian'"
+          class="bg-white rounded-2xl shadow-lg border border-zinc-100 overflow-hidden hover:shadow-2xl transition-all duration-500 recipe-card group animate-fade-in relative">
+          <button aria-label="Save recipe"
+            class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-zinc-700 hover:text-red-500 shadow flex items-center justify-center transition-colors">
+            <i class="fa-regular fa-heart group-hover:scale-110 transition-transform"></i>
+          </button>
+          <div class="h-64 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1519749309470-4be889b4e4e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtdXNocm9vbSUyMHJpc290dG8lMjBjcmVhbXklMjBnb3VybWV0JTIwYm93bHxlbnwwfDB8fHwxNzU4OTQ4OTA3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+              alt="Creamy Mushroom Risotto in a bowl"
+              class="w-full h-full object-cover recipe-image transition-transform duration-500 will-change-transform"
+              loading="lazy" decoding="async">
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="inline-flex items-center bg-green-100 text-green-700 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                <i class="fas fa-leaf mr-1"></i> Vegetarian
+              </span>
+              <div class="text-yellow-500 text-xs" aria-label="Rating 4.7 out of 5">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold text-zinc-900 mb-3 group-hover:text-purple-600 transition-colors">
+              Creamy Mushroom Risotto</h3>
+            <p class="text-zinc-600 text-sm mb-5 leading-relaxed">Creamy arborio rice with wild mushrooms and
+              parmesan cheese — perfect for a cozy dinner.</p>
+            <div class="flex justify-between items-center text-sm text-zinc-500">
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center space-x-1">
+                  <i class="fas fa-clock"></i>
+                  <span>45 mins</span>
+                </span>
+                <span class="flex items-center space-x-1">
+                  <i class="fas fa-users"></i>
+                  <span>4 servings</span>
+                </span>
+              </div>
+              <a href="#"
+                class="text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
+                <span>Read</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Recipe Card 2 -->
+        <article x-show="activeFilter==='All' || activeFilter==='Gluten-Free'"
+          class="bg-white rounded-2xl shadow-lg border border-zinc-100 overflow-hidden hover:shadow-2xl transition-all duration-500 recipe-card group animate-fade-in relative">
+          <button aria-label="Save recipe"
+            class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-zinc-700 hover:text-red-500 shadow flex items-center justify-center transition-colors">
+            <i class="fa-regular fa-heart group-hover:scale-110 transition-transform"></i>
+          </button>
+          <div class="h-64 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1658218615053-955e8af55947?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUaGFpJTIwcmVkJTIwY3VycnklMjBjb2NvbnV0JTIwdmVnZXRhYmxlcyUyMGJvd2wlMjBvdmVyaGVhZHxlbnwwfDB8fHwxNzU4OTQ4OTA4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+              alt="Thai red curry with coconut milk and vegetables"
+              class="w-full h-full object-cover recipe-image transition-transform duration-500 will-change-transform"
+              loading="lazy" decoding="async">
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="inline-flex items-center bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                <i class="fas fa-wheat-awn mr-1"></i> Gluten-Free
+              </span>
+              <div class="text-yellow-500 text-xs" aria-label="Rating 4.5 out of 5">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold text-zinc-900 mb-3 group-hover:text-purple-600 transition-colors">Thai
+              Red Curry with Coconut</h3>
+            <p class="text-zinc-600 text-sm mb-5 leading-relaxed">Aromatic curry with fresh vegetables and rich
+              coconut milk, bursting with authentic Thai flavors.</p>
+            <div class="flex justify-between items-center text-sm text-zinc-500">
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center space-x-1">
+                  <i class="fas fa-clock"></i>
+                  <span>30 mins</span>
+                </span>
+                <span class="flex items-center space-x-1">
+                  <i class="fas fa-users"></i>
+                  <span>2 servings</span>
+                </span>
+              </div>
+              <a href="#"
+                class="text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
+                <span>Read</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Recipe Card 3 -->
+        <article x-show="activeFilter==='All' || activeFilter==='Dessert'"
+          class="bg-white rounded-2xl shadow-lg border border-zinc-100 overflow-hidden hover:shadow-2xl transition-all duration-500 recipe-card group animate-fade-in relative">
+          <button aria-label="Save recipe"
+            class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-zinc-700 hover:text-red-500 shadow flex items-center justify-center transition-colors">
+            <i class="fa-regular fa-heart group-hover:scale-110 transition-transform"></i>
+          </button>
+          <div class="h-64 overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1719228748811-272c2df983af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkYXJrJTIwY2hvY29sYXRlJTIwYXZvY2FkbyUyMG1vdXNzZSUyMGRlc3NlcnQlMjBlbGVnYW50fGVufDB8MHx8fDE3NTg5NDg5MDh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+              alt="Dark chocolate avocado mousse dessert"
+              class="w-full h-full object-cover recipe-image transition-transform duration-500 will-change-transform"
+              loading="lazy" decoding="async">
+          </div>
+          <div class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="inline-flex items-center bg-pink-100 text-pink-700 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                <i class="fas fa-ice-cream mr-1"></i> Dessert
+              </span>
+              <div class="text-yellow-500 text-xs" aria-label="Rating 4.8 out of 5">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+            </div>
+            <h3 class="text-xl font-semibold text-zinc-900 mb-3 group-hover:text-purple-600 transition-colors">Dark
+              Chocolate Avocado Mousse</h3>
+            <p class="text-zinc-600 text-sm mb-5 leading-relaxed">Rich, creamy dessert made with avocado and dark
+              chocolate — healthy indulgence at its finest.</p>
+            <div class="flex justify-between items-center text-sm text-zinc-500">
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center space-x-1">
+                  <i class="fas fa-clock"></i>
+                  <span>15 mins</span>
+                </span>
+                <span class="flex items-center space-x-1">
+                  <i class="fas fa-users"></i>
+                  <span>6 servings</span>
+                </span>
+              </div>
+              <a href="#"
+                class="text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
+                <span>Read</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chef Spotlight -->
+  <section class="py-16 bg-gradient-to-br from-zinc-50 to-purple-50/40">
+    <div class="container mx-auto px-4">
+      <div
+        class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-6 md:p-10 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <span
+            class="inline-flex items-center bg-purple-100 text-purple-700 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm mb-4">
+            <i class="fas fa-user-chef mr-2"></i> Meet the Chef
+          </span>
+          <h3 class="text-3xl font-bold text-zinc-900 mb-3">Chef Amara Reyes</h3>
+          <p class="text-zinc-600 leading-relaxed mb-5">Amara blends classic techniques with bold global flavors.
+            From weeknight winners to show-stopping desserts, she’ll guide you step-by-step.</p>
+          <div class="flex items-center gap-4 text-sm text-zinc-600">
+            <span class="flex items-center gap-2"><i class="fas fa-book text-purple-600"></i> 250+ Recipes</span>
+            <span class="flex items-center gap-2"><i class="fas fa-award text-amber-500"></i> Award-Winning</span>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="absolute -top-4 -left-4 w-16 h-16 bg-purple-500/10 rounded-full blur-2xl"></div>
+          <img
+            src="https://images.unsplash.com/photo-1584762074262-1e0c075f6775?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxzbWlsaW5nJTIwY2hlZiUyMHBvcnRyYWl0JTIwYXByb24lMjBuYXR1cmFsJTIwbGlnaHR8ZW58MHwwfHx8MTc1ODk0ODkwOXww&ixlib=rb-4.1.0&q=80&w=1080"
+            alt="Chef Amara Reyes smiling in apron"
+            class="w-full h-72 md:h-80 object-cover rounded-2xl shadow-2xl ring-1 ring-zinc-200" loading="lazy"
+            decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section id="newsletter"
+    class="relative bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-700 py-20 overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="absolute -top-20 -right-20 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+    <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-2xl mx-auto text-center text-white animate-slide-up">
+        <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-envelope-open-text text-2xl"></i>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Join Our Culinary Community</h2>
+        <p class="text-purple-100 mb-8 text-lg leading-relaxed">Get weekly recipes, cooking tips, and exclusive
+          content delivered to your inbox. No spam — just delicious inspiration!</p>
+        <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+          onsubmit="event.preventDefault(); document.getElementById('news-success').classList.remove('hidden'); this.reset();">
+          <div class="flex-1 relative">
+            <input type="email" placeholder="Enter your email" required
+              class="w-full px-4 py-4 rounded-xl border-2 border-purple-300 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-30 text-zinc-900 placeholder-zinc-500 transition-all duration-300"
+              aria-label="Email address">
+            <i class="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-zinc-400"></i>
+          </div>
+          <button type="submit"
+            class="bg-white text-purple-600 px-6 py-4 rounded-xl hover:bg-zinc-100 transition-all duration-300 transform hover:scale-105 font-medium shadow-xl flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-white/60">
+            <i class="fas fa-paper-plane"></i>
+            <span>Subscribe Now</span>
+          </button>
+        </form>
+        <p id="news-success" class="hidden mt-4 text-sm text-white/90">Thanks for joining! Please check your inbox
+          to confirm your subscription.</p>
+        <p class="text-purple-200 text-sm mt-3">Join 50,000+ food lovers already subscribed!</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-zinc-900 text-zinc-400 pt-16 pb-12">
+  <div class="container mx-auto px-4">
+    <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+        <div class="flex items-center space-x-3 mb-6">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-fuchsia-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+            <i class="fas fa-utensils text-white"></i>
+          </div>
+          <span class="text-white font-bold text-xl gradient-text">Flavor Fusion</span>
+        </div>
+        <p class="text-zinc-500 text-sm leading-relaxed mb-4">Sharing gourmet recipes and culinary inspiration since
+          2018. Making cooking accessible and enjoyable for everyone.</p>
+        <div class="flex space-x-3">
+          <div class="w-8 h-8 bg-zinc-800 rounded-full flex items-center justify-center">
+            <i class="fas fa-award text-purple-400 text-sm"></i>
+          </div>
+          <div class="w-8 h-8 bg-zinc-800 rounded-full flex items-center justify-center">
+            <i class="fas fa-heart text-red-400 text-sm"></i>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-white font-semibold mb-6 text-lg flex items-center space-x-2">
+          <i class="fas fa-tags text-purple-400"></i>
+          <span>Categories</span>
+        </h3>
+        <ul class="space-y-3 text-sm">
+          <li><a href="#"
+              class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+              <i class="fas fa-leaf text-green-400 w-4"></i>
+              <span>Vegetarian</span>
+            </a></li>
+          <li><a href="#"
+              class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+              <i class="fas fa-ice-cream text-pink-400 w-4"></i>
+              <span>Desserts</span>
+            </a></li>
+          <li><a href="#"
+              class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+              <i class="fas fa-bolt text-yellow-400 w-4"></i>
+              <span>Quick Meals</span>
+            </a></li>
+          <li><a href="#"
+              class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+              <i class="fas fa-heart-pulse text-red-400 w-4"></i>
+              <span>Special Diets</span>
+            </a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white font-semibold mb-6 text-lg flex items-center space-x-2">
+          <i class="fas fa-building text-blue-400"></i>
+          <span>Company</span>
+        </h3>
+        <ul class="space-y-3 text-sm">
+          <li><a href="#"
+              class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+              <i class="fas fa-info-circle text-blue-400 w-4"></i>
+              <span>About Us</span>
+            </a></li>
+          <li><a href="#"
+              class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+              <i class="fas fa-envelope text-purple-400 w-4"></i>
+              <span>Contact</span>
+            </a></li>
+          <li><a href="#"
+              class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+              <i class="fas fa-shield-alt text-green-400 w-4"></i>
+              <span>Privacy Policy</span>
+            </a></li>
+          <li><a href="#"
+              class="hover:text-white transition-all duration-300 hover:translate-x-1 flex items-center space-x-2">
+              <i class="fas fa-file-contract text-orange-400 w-4"></i>
+              <span>Terms of Service</span>
+            </a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white font-semibold mb-6 text-lg flex items-center space-x-2">
+          <i class="fas fa-share-alt text-fuchsia-400"></i>
+          <span>Connect</span>
+        </h3>
+        <div class="flex space-x-3 mb-6">
+          <a href="#"
+            class="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-all duration-300 transform hover:scale-110 shadow-lg"
+            aria-label="Facebook">
+            <i class="fab fa-facebook-f text-white"></i>
+          </a>
+          <a href="#"
+            class="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-pink-600 transition-all duration-300 transform hover:scale-110 shadow-lg"
+            aria-label="Instagram">
+            <i class="fab fa-instagram text-white"></i>
+          </a>
+          <a href="#"
+            class="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-all duration-300 transform hover:scale-110 shadow-lg"
+            aria-label="Pinterest">
+            <i class="fab fa-pinterest text-white"></i>
+          </a>
+        </div>
+        <div class="bg-zinc-800 rounded-lg p-4">
+          <p class="text-sm text-zinc-300 mb-2">Download Our App</p>
+          <div class="flex space-x-2">
+            <button class="flex-1 bg-black text-white py-2 px-3 rounded text-xs hover:bg-zinc-900 transition-colors">
+              <i class="fab fa-apple mr-1"></i> App Store
+            </button>
+            <button class="flex-1 bg-black text-white py-2 px-3 rounded text-xs hover:bg-zinc-900 transition-colors">
+              <i class="fab fa-google-play mr-1"></i> Play Store
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-zinc-800 pt-8 text-center">
+      <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <p class="text-zinc-600 text-sm">© 2024 Flavor Fusion. All rights reserved. Made with <i
+            class="fas fa-heart text-red-400 mx-1"></i> for food lovers.</p>
+        <div class="flex space-x-6 text-sm">
+          <a href="#" class="text-zinc-500 hover:text-white transition-colors">Sitemap</a>
+          <a href="#" class="text-zinc-500 hover:text-white transition-colors">Accessibility</a>
+          <a href="#" class="text-zinc-500 hover:text-white transition-colors">Careers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button onclick="scrollToTop()"
+  class="fixed bottom-6 right-6 w-12 h-12 bg-purple-600 text-white rounded-full shadow-2xl hover:bg-purple-700 transition-all duration-300 transform hover:scale-110 z-40 flex items-center justify-center opacity-0 invisible"
+  aria-label="Back to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script>
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Show/hide back to top button
+  window.addEventListener('scroll', function () {
+    const backToTopButton = document.querySelector('button[onclick="scrollToTop()"]');
+    if (window.scrollY > 300) {
+      backToTopButton.classList.remove('opacity-0', 'invisible');
+      backToTopButton.classList.add('opacity-100', 'visible');
+    } else {
+      backToTopButton.classList.remove('opacity-100', 'visible');
+      backToTopButton.classList.add('opacity-0', 'invisible');
+    }
+  });
+
+  // Enhance prefers-reduced-motion users
+  (function () {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.matches) {
+      document.querySelectorAll('[class*="animate-"]').forEach(el => {
+        el.className = el.className.replace(/animate-[^\s]+/g, '');
+      });
+    }
+  })();
+</script>
+
+{% endblock content %}

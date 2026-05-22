@@ -1,0 +1,102 @@
+<a href="#main"
+  class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-white focus:text-zinc-900 focus:ring-2 focus:ring-purple-500 focus:px-3 focus:py-2 rounded-md">
+    Skip to content
+</a>
+
+<!-- Header -->
+<header class="bg-white/90 backdrop-blur border-b border-zinc-200 sticky top-0 z-50">
+  <div class="container mx-auto px-4 py-4">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div
+          class="w-10 h-10 bg-gradient-to-r from-fuchsia-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+          <i class="fas fa-utensils text-white text-lg"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-zinc-900 gradient-text">Flavor Fusion</h1>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center space-x-8" x-show="!mobileMenuOpen">
+        <a href="{% url 'blog:post-list' %}"
+          class="text-zinc-600 hover:text-purple-600 font-medium transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+          <i class="fas fa-book-open text-sm"></i>
+          <span>Recipes</span>
+        </a>
+        <a href="#"
+          class="text-zinc-600 hover:text-purple-600 font-medium transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+          <i class="fas fa-tags text-sm"></i>
+          <span>Categories</span>
+        </a>
+        <a href="#"
+          class="text-zinc-600 hover:text-purple-600 font-medium transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+          <i class="fas fa-info-circle text-sm"></i>
+          <span>About</span>
+        </a>
+        <a href="#"
+          class="text-zinc-600 hover:text-purple-600 font-medium transition-all duration-300 hover:scale-105 flex items-center space-x-1">
+          <i class="fas fa-envelope text-sm"></i>
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="hidden lg:flex items-center space-x-3">
+        <div class="relative">
+          <input type="text" placeholder="Search recipes..."
+            class="w-56 pl-10 pr-3 py-2.5 rounded-lg border border-zinc-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-200 transition-all text-sm"
+            aria-label="Search recipes">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <a href="#newsletter"
+          class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-5 py-2.5 rounded-lg hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 transform hover:scale-105 font-medium shadow-lg flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-purple-300">
+          <i class="fas fa-heart"></i>
+          <span>Subscribe</span>
+        </a>
+        <button @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen" aria-controls="mobile-menu"
+          class="md:hidden text-zinc-600 p-2 rounded-lg hover:bg-zinc-100 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300">
+          <i class="fas fa-bars text-xl" x-show="!mobileMenuOpen"></i>
+          <i class="fas fa-times text-xl" x-show="mobileMenuOpen" x-cloak></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden mt-4 bg-white rounded-lg shadow-lg p-4" x-show="mobileMenuOpen"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 transform -translate-y-2"
+      x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100 transform translate-y-0"
+      x-transition:leave-end="opacity-0 transform -translate-y-2" x-cloak>
+      <div class="space-y-3">
+        <div class="relative">
+          <input type="text" placeholder="Search recipes..."
+            class="w-full pl-10 pr-3 py-3 rounded-lg border border-zinc-200 focus:border-purple-400 focus:ring-4 focus:ring-purple-200 transition-all text-sm"
+            aria-label="Search recipes mobile">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+        </div>
+        <a href="#"
+          class="block py-2 px-3 text-zinc-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors font-medium flex items-center space-x-2">
+          <i class="fas fa-book-open w-5"></i>
+          <span>Recipes</span>
+        </a>
+        <a href="#"
+          class="block py-2 px-3 text-zinc-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors font-medium flex items-center space-x-2">
+          <i class="fas fa-tags w-5"></i>
+          <span>Categories</span>
+        </a>
+        <a href="#"
+          class="block py-2 px-3 text-zinc-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors font-medium flex items-center space-x-2">
+          <i class="fas fa-info-circle w-5"></i>
+          <span>About</span>
+        </a>
+        <a href="#"
+          class="block py-2 px-3 text-zinc-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors font-medium flex items-center space-x-2">
+          <i class="fas fa-envelope w-5"></i>
+          <span>Contact</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

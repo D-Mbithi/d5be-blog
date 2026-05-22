@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" x-data="{ mobileMenuOpen: false, showVideo:false, activeFilter:'All' }">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta keywords="blog" />
+    <meta name="theme-color" content="#9333ea">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flavor Fusion | {% block title %}{% endblock title %}</title>
+    <meta name="description"
+      content="Flavor Fusion brings you gourmet recipes, cooking tips, and culinary inspiration. Discover featured dishes, quick meals, desserts, and more.">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: '#faf5ff',
+                500: '#a855f7',
+                600: '#9333ea',
+                700: '#7c3aed'
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.6s ease-in-out both',
+              'slide-up': 'slideUp 0.7s ease-out both',
+              'bounce-gentle': 'bounceGentle 2s infinite',
+              'pulse-soft': 'pulseSoft 2.5s ease-in-out infinite'
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' }
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(24px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' }
+              },
+              bounceGentle: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-5px)' }
+              },
+              pulseSoft: {
+                '0%, 100%': { opacity: '1' },
+                '50%': { opacity: '.6' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+
+      .recipe-card:hover .recipe-image {
+        transform: scale(1.06);
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .shimmer {
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.06) 25%, rgba(0, 0, 0, 0.12) 37%, rgba(0, 0, 0, 0.06) 63%);
+        background-size: 400% 100%;
+        animation: shimmer 1.4s ease infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: 200% 0;
+        }
+
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      .poppins-thin {
+        font-family: "Poppins", serif;
+        font-weight: 100;
+        font-style: normal;
+      }
+
+      .poppins-extralight {
+        font-family: "Poppins", serif;
+        font-weight: 200;
+        font-style: normal;
+      }
+
+      .poppins-light {
+        font-family: "Poppins", serif;
+        font-weight: 300;
+        font-style: normal;
+      }
+
+      .poppins-regular {
+        font-family: "Poppins", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .poppins-medium {
+        font-family: "Poppins", serif;
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      .poppins-semibold {
+        font-family: "Poppins", serif;
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      .poppins-bold {
+        font-family: "Poppins", serif;
+        font-weight: 700;
+        font-style: normal;
+      }
+
+      .poppins-extrabold {
+        font-family: "Poppins", serif;
+        font-weight: 800;
+        font-style: normal;
+      }
+
+      .poppins-black {
+        font-family: "Poppins", serif;
+        font-weight: 900;
+        font-style: normal;
+      }
+
+      .poppins-thin-italic {
+        font-family: "Poppins", serif;
+        font-weight: 100;
+        font-style: italic;
+      }
+
+      .poppins-extralight-italic {
+        font-family: "Poppins", serif;
+        font-weight: 200;
+        font-style: italic;
+      }
+
+      .poppins-light-italic {
+        font-family: "Poppins", serif;
+        font-weight: 300;
+        font-style: italic;
+      }
+
+      .poppins-regular-italic {
+        font-family: "Poppins", serif;
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      .poppins-medium-italic {
+        font-family: "Poppins", serif;
+        font-weight: 500;
+        font-style: italic;
+      }
+
+      .poppins-semibold-italic {
+        font-family: "Poppins", serif;
+        font-weight: 600;
+        font-style: italic;
+      }
+
+      .poppins-bold-italic {
+        font-family: "Poppins", serif;
+        font-weight: 700;
+        font-style: italic;
+      }
+
+      .poppins-extrabold-italic {
+        font-family: "Poppins", serif;
+        font-weight: 800;
+        font-style: italic;
+      }
+
+      .poppins-black-italic {
+        font-family: "Poppins", serif;
+        font-weight: 900;
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body class="bg-zinc-50 text-zinc-800 font-sans antialiased">
+    <main>
+        {% include 'partials/header.html' %}
+        {% block content %}{% endblock %}
+    </main>
+  </body>
+
+</html>

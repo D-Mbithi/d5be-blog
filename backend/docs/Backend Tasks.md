@@ -43,7 +43,7 @@ The platform should support:
 #### Features:
 1. [x] Registration
 2. [x] Login/logout
-3. [ ] Email verification
+3. [x] Email verification
 4. [x] Password reset
 5. [ ] OAuth login
 6. [x] Profile management

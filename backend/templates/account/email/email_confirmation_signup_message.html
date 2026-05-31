@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm Your E-mail Address{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold text-center">Confirm Your E-mail Address</h1>
+    <div class="max-w-md mx-auto mt-4 bg-white p-6 rounded-lg shadow-md">
+        <p>Hello from d5be-blog!</p>
+        <p>You're receiving this e-mail because you have signed up for an account on d5be-blog.</p>
+        <p>Please click the following link to confirm your e-mail address:</p>
+        <p><a href="{{ activate_url }}" class="text-purple-600 hover:text-purple-800">{{ activate_url }}</a></p>
+        <p>Thanks for signing up!</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+Hello from d5be-blog!
+
+You're receiving this e-mail because you have registered for an account on d5be-blog.
+
+Please click the following link to confirm your e-mail address:
+{{ activate_url }}
+
+Thanks for signing up!

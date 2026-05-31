@@ -7,7 +7,11 @@ from django.conf import settings
 
 
 class CustomUser(AbstractUser):
-    pass
+    email = models.EmailField(unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
 
     def __str__(self):
         return self.get_username()
@@ -15,9 +19,14 @@ class CustomUser(AbstractUser):
 
 
 class Profile(TimeStampedModel):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile'
+    )
+    full_name = models.CharField(max_length=100, blank=True)
     bio = models.TextField(default='', blank=True)
-    profile_pic = models.ImageField(upload_to='profile_pics', blank=True, default='profile_pics/default.jpg')
+    profile_pic = models.ImageField(
+        upload_to='profile_pics', blank=True, default='profile_pics/default.jpg'
+    )
 
     def __str__(self):
         return self.user.email
@@ -25,6 +34,7 @@ class Profile(TimeStampedModel):
     class Meta:
         verbose_name = "User Profile"
         verbose_name_plural = "User Profiles"
+
 
 
 

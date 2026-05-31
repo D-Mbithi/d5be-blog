@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 
-from .models import Post, Category, Status
+from .models import Recipe, Category, Status
 
 
 class PostModelTests(TestCase):
@@ -20,7 +20,7 @@ class PostModelTests(TestCase):
     def test_post_publish_date_set_on_publish(self):
         """Test that publish date is set when status changes to published"""
         # Create a draft post
-        post = Post.objects.create(
+        post = Recipe.objects.create(
             title="Test Post",
             slug="test-post",
             body="This is a test post body",

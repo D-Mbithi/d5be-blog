@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from apps.blog.models import Category, Post  # type: ignore
+from apps.blog.models import Category, Recipe  # type: ignore
 
 # Register your models here.
 
 
-@admin.register(Post)
+@admin.register(Recipe)
 class PostAdmin(admin.ModelAdmin):
     list_display = [
         "title",

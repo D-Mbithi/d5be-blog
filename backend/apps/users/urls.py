@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import profielview
+from .views import profile_view, edit_profile
 
-app_name = "users"
+app_name = "accounts"
 
 
 urlpatterns = [
-    path('<int:profile_id>/profile/', profielview, name="profile" )
+    path('profile/<int:profile_id>/', profile_view, name="profile" ),
+    path('profile/<int:profile_id>/edit/', edit_profile, name="edit_profile" )
 ]

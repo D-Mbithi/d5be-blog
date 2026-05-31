@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Category, Comment, Post
+from .models import Category, Comment, Recipe
 
 
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Post
+        model = Recipe
         fields = [
             "title",
             "description",

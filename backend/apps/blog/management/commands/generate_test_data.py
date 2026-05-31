@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from taggit.models import Tag, TaggedItem
 
-from apps.blog.models import Category, Comment, Post
+from apps.blog.models import Category, Comment, Recipe
 
 RECIPE_CATEGORIES = [
     "Breakfast",
@@ -18,6 +18,13 @@ RECIPE_CATEGORIES = [
     "Drinks",
     "Vegetarian",
     "Meal Prep",
+    "Appetizers",
+    "Soups",
+    "Salads",
+    "Baking",
+    "Vegan",
+    "Gluten-Free",
+    "Seafood",
 ]
 
 RECIPE_TAGS = [
@@ -524,7 +531,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("--users", type=int, default=6, help="Number of recipe authors to create")
-        parser.add_argument("--categories", type=int, default=8, help="Number of recipe categories to create")
+        parser.add_argument("--categories", type=int, default=15, help="Number of recipe categories to create")
         parser.add_argument("--posts", type=int, default=24, help="Total number of recipe posts to create")
         parser.add_argument("--comments", type=int, default=72, help="Total number of comments to create")
         parser.add_argument(
@@ -543,7 +550,7 @@ class Command(BaseCommand):
 
     def _reset_demo_data(self):
         Comment.objects.all().delete()
-        Post.objects.all().delete()
+        Recipe.objects.all().delete()
         Category.objects.all().delete()
         TaggedItem.objects.all().delete()
         Tag.objects.all().delete()
@@ -597,7 +604,7 @@ class Command(BaseCommand):
             publish = timezone.now() - timedelta(days=random.randint(0, 220))
             is_published = random.random() < 0.8
 
-            post = Post.objects.create(
+            post = Recipe.objects.create(
                 title=title,
                 slug=f"{slugify(title)}-{index}",
                 body=self._build_recipe_body(recipe),

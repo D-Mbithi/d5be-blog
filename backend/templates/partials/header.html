@@ -12,7 +12,7 @@
           class="w-10 h-10 bg-gradient-to-r from-fuchsia-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
           <i class="fas fa-utensils text-white text-lg"></i>
         </div>
-        <h1 class="text-2xl font-bold text-zinc-900 gradient-text">Flavor Fusion</h1>
+        <a href="/" class="text-2xl font-bold text-zinc-900 gradient-text">Flavor Fusion</a>
       </div>
 
       <!-- Desktop Nav -->
@@ -49,11 +49,42 @@
       </div>
 
       <div class="flex items-center space-x-2">
-        <a href="#newsletter"
-          class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-5 py-2.5 rounded-lg hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 transform hover:scale-105 font-medium shadow-lg flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-purple-300">
-          <i class="fas fa-heart"></i>
-          <span>Subscribe</span>
-        </a>
+          {% if request.user.is_authenticated %}
+            <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-8 py-4 rounded-xl hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 transform hover:scale-105 font-medium shadow-xl flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-purple-300 capitalize" type="button">
+            {{ user.username }}
+              <svg class="w-4 h-4 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+              </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+                <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownHoverButton">
+                  <li>
+                    <a href="#" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                        Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'accounts:profile' request.user.id %}" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                        Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'account_change_password' %}" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                        Password Change
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{% url 'account_logout' %}" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">
+                        Sign out
+                    </a>
+                  </li>
+                </ul>
+            </div>
+          {% else %}
+              <a href="{% url 'account_login' %}"
+              class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-5 py-2.5 rounded-lg hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 transform hover:scale-105 font-medium shadow-lg flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-purple-300"><span>Login|Signup</span></a>
+          {% endif %}
         <button @click="mobileMenuOpen = !mobileMenuOpen" :aria-expanded="mobileMenuOpen" aria-controls="mobile-menu"
           class="md:hidden text-zinc-600 p-2 rounded-lg hover:bg-zinc-100 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-300">
           <i class="fas fa-bars text-xl" x-show="!mobileMenuOpen"></i>

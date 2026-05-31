@@ -9,18 +9,26 @@ from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.http import Http404
 
+from taggit.models import Tag
 # pyrefly: ignore [missing-import]
 from .forms import CategoryForm, CommentForm, EmailPostForm, PostForm
 # pyrefly: ignore [missing-import]
-from .models import Post, Category
+from .models import Recipe, Category
 
 
 # Create your views here.
-class PostListView(ListView):
-    queryset = Post.published.all().select_related("author", "category")
-    template_name = 'blog/post_list_class.html'
+class RecipeListView(ListView):
+    queryset = Recipe.published.all().select_related("author", "category")
+    template_name = 'recipe/recipe_list.html'
     paginate_by = 10
-    context_object_name = 'posts'
+    context_object_name = 'recipes'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['tags'] = Tag.objects.all()
+        context['latest_recipes'] = Recipe.published.all()[:5]
+        return context
 
 class CategoryDetailView(DetailView):
     model = Category
@@ -34,7 +42,7 @@ class CategoryDetailView(DetailView):
 
 
 def post_list(request):
-    posts_list = Post.objects.filter(status="PB").select_related("author", "category")
+    posts_list = Recipe.objects.filter(status="PB").select_related("author", "category")
 
     paginator = Paginator(posts_list, 9)
     page_number = request.GET.get("page")
@@ -47,7 +55,7 @@ def post_list(request):
 
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(
-        Post.objects.select_related("author", "category"),
+        Recipe.objects.select_related("author", "category"),
         slug=post,
         publish__year=year,
         publish__month=month,
@@ -86,7 +94,7 @@ def post_create(request):
 
 @login_required
 def post_update(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Recipe, id=post_id)
     if post.author != request.user:
         raise Http404("You are not allowed to edit this post.")
         
@@ -109,7 +117,7 @@ def post_update(request, post_id):
 @login_required
 @require_POST
 def post_delete(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Recipe, id=post_id)
     if post.author != request.user:
         raise Http404("You are not allowed to delete this post.")
     post.delete()
@@ -135,7 +143,7 @@ def category_create(request):
 
 
 def post_share(request, post_id):
-    post = get_object_or_404(Post, id=post_id, status="PB")
+    post = get_object_or_404(Recipe, id=post_id, status="PB")
     sent = False
 
     if request.method == "POST":
@@ -177,7 +185,7 @@ def post_share(request, post_id):
 
 @require_POST
 def post_comment(request, post_id):
-    post = get_object_or_404(Post, id=post_id, status="PB")
+    post = get_object_or_404(Recipe, id=post_id, status="PB")
     form = CommentForm(request.POST)
     if form.is_valid():
         comment = form.save(commit=False)

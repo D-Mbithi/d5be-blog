@@ -5,8 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "cryptography>=48.0.0",
     "django>=6.0.5",
     "django-allauth>=65.17.0",
+    "django-anymail[resend]>=15.0",
+    "django-browser-reload>=1.21.0",
     "django-environ>=0.13.0",
     "django-extensions>=4.1",
     "django-seed>=0.3.1",
@@ -20,7 +23,9 @@ dependencies = [
     "markdown>=3.10.2",
     "pillow>=12.2.0",
     "psycopg2>=2.9.12",
+    "pyjwt>=2.13.0",
     "python-decouple>=3.8",
+    "requests>=2.34.2",
 ]
 
 [dependency-groups]

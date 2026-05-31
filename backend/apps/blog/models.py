@@ -21,8 +21,8 @@ class PublishedManager(models.Manager):
             is_featured=True).order_by("-publish")
 
 
-class Post(TimeStampedModel):
-    """Blog post model."""
+class Recipe(TimeStampedModel):
+    """Recipe"""
 
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=250, unique_for_date="publish")
@@ -101,7 +101,7 @@ class Post(TimeStampedModel):
             self.slug = slugify(self.title)
         if self.status == "PB" and self.publish is None:
             self.publish = timezone.now()
-        super().save(*args, **kwargs)
+        super().save(**kwargs)
 
 
 class Category(models.Model):
@@ -121,7 +121,7 @@ class Category(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(
-        "Post", on_delete=models.CASCADE, related_name="comments"
+        "Recipe", on_delete=models.CASCADE, related_name="comments"
     )
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -153,3 +153,5 @@ class Comment(models.Model):
                 self.post.slug,
             ]
         ) + f"#comment-{self.id}"
+
+

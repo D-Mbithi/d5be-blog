@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Recipes- Flavor Fusion | Gourmet Recipes & Culinary Inspiration
+{% endblock %}
+{% block content %}
+	 <section class="container mx-auto px-4 bg-white h-full overflow-y-scroll ">
+         <div class="grid grid-cols-8 gap-4">
+             <div class="col-span-6">
+                 <!-- Featured Recipes -->
+                 <section id="latest" class="py-20 bg-white">
+                <div class="container mx-auto px-4">
+                  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 animate-fade-in">
+                    <div>
+                      <h2 class="text-4xl font-bold text-zinc-900">Latest Recipes</h2>
+                      <p class="text-zinc-600 mt-1">Freshly plated ideas to elevate your next meal.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="flex gap-2 overflow-x-auto max-w-full no-scrollbar" x-data>
+                        <button @click="activeFilter='All'"
+                          :class="activeFilter==='All' ? 'bg-purple-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'"
+                          class="px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all">All</button>
+                        <button @click="activeFilter='Vegetarian'"
+                          :class="activeFilter==='Vegetarian' ? 'bg-purple-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'"
+                          class="px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all"><i
+                            class="fas fa-leaf mr-1 text-green-600"></i>Vegetarian</button>
+                        <button @click="activeFilter='Gluten-Free'"
+                          :class="activeFilter==='Gluten-Free' ? 'bg-purple-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'"
+                          class="px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all"><i
+                            class="fas fa-wheat-awn mr-1 text-blue-600"></i>Gluten-Free</button>
+                        <button @click="activeFilter='Dessert'"
+                          :class="activeFilter==='Dessert' ? 'bg-purple-600 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'"
+                          class="px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all"><i
+                            class="fas fa-ice-cream mr-1 text-pink-600"></i>Dessert</button>
+                      </div>
+                      <a href="#"
+                        class="text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-2 group transition-all duration-300 ml-2">
+                        <span>View All</span>
+                        <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Recipe Card 1 -->
+                    <article x-show="activeFilter==='All' || activeFilter==='Vegetarian'"
+                      class="bg-white rounded-2xl shadow-lg border border-zinc-100 overflow-hidden hover:shadow-2xl transition-all duration-500 recipe-card group animate-fade-in relative">
+                      <button aria-label="Save recipe"
+                        class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-zinc-700 hover:text-red-500 shadow flex items-center justify-center transition-colors">
+                        <i class="fa-regular fa-heart group-hover:scale-110 transition-transform"></i>
+                      </button>
+                      <div class="h-64 overflow-hidden">
+                        <img
+                          src="https://images.unsplash.com/photo-1519749309470-4be889b4e4e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtdXNocm9vbSUyMHJpc290dG8lMjBjcmVhbXklMjBnb3VybWV0JTIwYm93bHxlbnwwfDB8fHwxNzU4OTQ4OTA3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                          alt="Creamy Mushroom Risotto in a bowl"
+                          class="w-full h-full object-cover recipe-image transition-transform duration-500 will-change-transform"
+                          loading="lazy" decoding="async">
+                      </div>
+                      <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                          <span
+                            class="inline-flex items-center bg-green-100 text-green-700 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                            <i class="fas fa-leaf mr-1"></i> Vegetarian
+                          </span>
+                          <div class="text-yellow-500 text-xs" aria-label="Rating 4.7 out of 5">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                          </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-zinc-900 mb-3 group-hover:text-purple-600 transition-colors">
+                          Creamy Mushroom Risotto</h3>
+                        <p class="text-zinc-600 text-sm mb-5 leading-relaxed">Creamy arborio rice with wild mushrooms and
+                          parmesan cheese — perfect for a cozy dinner.</p>
+                        <div class="flex justify-between items-center text-sm text-zinc-500">
+                          <div class="flex items-center space-x-4">
+                            <span class="flex items-center space-x-1">
+                              <i class="fas fa-clock"></i>
+                              <span>45 mins</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                              <i class="fas fa-users"></i>
+                              <span>4 servings</span>
+                            </span>
+                          </div>
+                          <a href="#"
+                            class="text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
+                            <span>Read</span>
+                            <i class="fas fa-arrow-right"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+
+                    <!-- Recipe Card 2 -->
+                    <article x-show="activeFilter==='All' || activeFilter==='Gluten-Free'"
+                      class="bg-white rounded-2xl shadow-lg border border-zinc-100 overflow-hidden hover:shadow-2xl transition-all duration-500 recipe-card group animate-fade-in relative">
+                      <button aria-label="Save recipe"
+                        class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-zinc-700 hover:text-red-500 shadow flex items-center justify-center transition-colors">
+                        <i class="fa-regular fa-heart group-hover:scale-110 transition-transform"></i>
+                      </button>
+                      <div class="h-64 overflow-hidden">
+                        <img
+                          src="https://images.unsplash.com/photo-1658218615053-955e8af55947?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxUaGFpJTIwcmVkJTIwY3VycnklMjBjb2NvbnV0JTIwdmVnZXRhYmxlcyUyMGJvd2wlMjBvdmVyaGVhZHxlbnwwfDB8fHwxNzU4OTQ4OTA4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                          alt="Thai red curry with coconut milk and vegetables"
+                          class="w-full h-full object-cover recipe-image transition-transform duration-500 will-change-transform"
+                          loading="lazy" decoding="async">
+                      </div>
+                      <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                          <span
+                            class="inline-flex items-center bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                            <i class="fas fa-wheat-awn mr-1"></i> Gluten-Free
+                          </span>
+                          <div class="text-yellow-500 text-xs" aria-label="Rating 4.5 out of 5">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                          </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-zinc-900 mb-3 group-hover:text-purple-600 transition-colors">Thai
+                          Red Curry with Coconut</h3>
+                        <p class="text-zinc-600 text-sm mb-5 leading-relaxed">Aromatic curry with fresh vegetables and rich
+                          coconut milk, bursting with authentic Thai flavors.</p>
+                        <div class="flex justify-between items-center text-sm text-zinc-500">
+                          <div class="flex items-center space-x-4">
+                            <span class="flex items-center space-x-1">
+                              <i class="fas fa-clock"></i>
+                              <span>30 mins</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                              <i class="fas fa-users"></i>
+                              <span>2 servings</span>
+                            </span>
+                          </div>
+                          <a href="#"
+                            class="text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
+                            <span>Read</span>
+                            <i class="fas fa-arrow-right"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+
+                    <!-- Recipe Card 3 -->
+                    <article x-show="activeFilter==='All' || activeFilter==='Dessert'"
+                      class="bg-white rounded-2xl shadow-lg border border-zinc-100 overflow-hidden hover:shadow-2xl transition-all duration-500 recipe-card group animate-fade-in relative">
+                      <button aria-label="Save recipe"
+                        class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur text-zinc-700 hover:text-red-500 shadow flex items-center justify-center transition-colors">
+                        <i class="fa-regular fa-heart group-hover:scale-110 transition-transform"></i>
+                      </button>
+                      <div class="h-64 overflow-hidden">
+                        <img
+                          src="https://images.unsplash.com/photo-1719228748811-272c2df983af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxkYXJrJTIwY2hvY29sYXRlJTIwYXZvY2FkbyUyMG1vdXNzZSUyMGRlc3NlcnQlMjBlbGVnYW50fGVufDB8MHx8fDE3NTg5NDg5MDh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                          alt="Dark chocolate avocado mousse dessert"
+                          class="w-full h-full object-cover recipe-image transition-transform duration-500 will-change-transform"
+                          loading="lazy" decoding="async">
+                      </div>
+                      <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                          <span
+                            class="inline-flex items-center bg-pink-100 text-pink-700 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
+                            <i class="fas fa-ice-cream mr-1"></i> Dessert
+                          </span>
+                          <div class="text-yellow-500 text-xs" aria-label="Rating 4.8 out of 5">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                          </div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-zinc-900 mb-3 group-hover:text-purple-600 transition-colors">Dark
+                          Chocolate Avocado Mousse</h3>
+                        <p class="text-zinc-600 text-sm mb-5 leading-relaxed">Rich, creamy dessert made with avocado and dark
+                          chocolate — healthy indulgence at its finest.</p>
+                        <div class="flex justify-between items-center text-sm text-zinc-500">
+                          <div class="flex items-center space-x-4">
+                            <span class="flex items-center space-x-1">
+                              <i class="fas fa-clock"></i>
+                              <span>15 mins</span>
+                            </span>
+                            <span class="flex items-center space-x-1">
+                              <i class="fas fa-users"></i>
+                              <span>6 servings</span>
+                            </span>
+                          </div>
+                          <a href="#"
+                            class="text-purple-600 hover:text-purple-700 font-medium flex items-center space-x-1 group-hover:translate-x-1 transition-transform">
+                            <span>Read</span>
+                            <i class="fas fa-arrow-right"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              </section>
+             </div>
+             <div class="col-span-2 py-20 bg-white">
+               <aside class="col-span-1 lg:col-span-1 space-y-6 p-2">
+                  <!-- Tags -->
+                  <section class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-6">
+                    <h3 class="text-lg font-semibold text-zinc-900 mb-4 flex items-center gap-2">
+                      <i class="fas fa-tags text-purple-500"></i>
+                      <span>Tags</span>
+                    </h3>
+
+                    <div class="flex flex-wrap gap-2">
+                      <a href="#" class="px-3 py-1.5 rounded-full bg-purple-50 text-purple-700 text-sm font-medium hover:bg-purple-100 transition">
+                        Healthy
+                      </a>
+                      <a href="#" class="px-3 py-1.5 rounded-full bg-zinc-100 text-zinc-700 text-sm font-medium hover:bg-zinc-200 transition">
+                        Quick
+                      </a>
+                      <a href="#" class="px-3 py-1.5 rounded-full bg-zinc-100 text-zinc-700 text-sm font-medium hover:bg-zinc-200 transition">
+                        Dessert
+                      </a>
+                      <a href="#" class="px-3 py-1.5 rounded-full bg-zinc-100 text-zinc-700 text-sm font-medium hover:bg-zinc-200 transition">
+                        Vegan
+                      </a>
+                    </div>
+                  </section>
+
+                  <!-- Categories -->
+                  <section class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-6">
+                    <h3 class="text-lg font-semibold text-zinc-900 mb-4 flex items-center gap-2">
+                      <i class="fas fa-layer-group text-fuchsia-500"></i>
+                      <span>Categories</span>
+                    </h3>
+
+                    <ul class="space-y-3">
+                      <li>
+                        <a href="#" class="flex items-center justify-between rounded-2xl px-4 py-3 bg-zinc-50 hover:bg-purple-50 transition group">
+                          <span class="flex items-center gap-3 text-zinc-700 group-hover:text-purple-700">
+                            <i class="fas fa-leaf text-green-500"></i>
+                            Vegetarian
+                          </span>
+                          <span class="text-xs font-medium text-zinc-500">12</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="flex items-center justify-between rounded-2xl px-4 py-3 bg-zinc-50 hover:bg-purple-50 transition group">
+                          <span class="flex items-center gap-3 text-zinc-700 group-hover:text-purple-700">
+                            <i class="fas fa-ice-cream text-pink-500"></i>
+                            Desserts
+                          </span>
+                          <span class="text-xs font-medium text-zinc-500">8</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="flex items-center justify-between rounded-2xl px-4 py-3 bg-zinc-50 hover:bg-purple-50 transition group">
+                          <span class="flex items-center gap-3 text-zinc-700 group-hover:text-purple-700">
+                            <i class="fas fa-bolt text-yellow-500"></i>
+                            Quick Meals
+                          </span>
+                          <span class="text-xs font-medium text-zinc-500">5</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </section>
+
+                  <!-- Latest Recipes -->
+                  <section class="bg-white rounded-3xl shadow-xl border border-zinc-100 p-6">
+                    <h3 class="text-lg font-semibold text-zinc-900 mb-4 flex items-center gap-2">
+                      <i class="fas fa-clock text-purple-500"></i>
+                      <span>Latest Recipes</span>
+                    </h3>
+
+                    <div class="space-y-4">
+                      <a href="#" class="flex gap-3 group">
+                        <img src="https://images.unsplash.com/photo-1519749309470-4be889b4e4e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtdXNocm9vbSUyMHJpc290dG8lMjBjcmVhbXklMjBnb3VybWV0JTIwYm93bHxlbnwwfDB8fHwxNzU4OTQ4OTA3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                alt="Recipe thumbnail"
+                             class="w-16 h-16 rounded-2xl object-cover ring-1 ring-zinc-200 group-hover:ring-purple-300 transition">
+                        <div class="flex-1">
+                          <h4 class="text-sm font-semibold text-zinc-900 group-hover:text-purple-700 transition line-clamp-2">
+                            Creamy Mushroom Risotto
+                          </h4>
+                          <p class="text-xs text-zinc-500 mt-1">45 mins · Vegetarian</p>
+                        </div>
+                      </a>
+
+                      <a href="#" class="flex gap-3 group">
+                        <img src="https://images.unsplash.com/photo-1519749309470-4be889b4e4e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MDcxMzN8MHwxfHNlYXJjaHwxfHxtdXNocm9vbSUyMHJpc290dG8lMjBjcmVhbXklMjBnb3VybWV0JTIwYm93bHxlbnwwfDB8fHwxNzU4OTQ4OTA3fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                alt="Recipe thumbnail"
+                             class="w-16 h-16 rounded-2xl object-cover ring-1 ring-zinc-200 group-hover:ring-purple-300 transition">
+                        <div class="flex-1">
+                          <h4 class="text-sm font-semibold text-zinc-900 group-hover:text-purple-700 transition line-clamp-2">
+                            Thai Red Curry with Coconut
+                          </h4>
+                          <p class="text-xs text-zinc-500 mt-1">30 mins · Gluten-Free</p>
+                        </div>
+                      </a>
+                    </div>
+                  </section>
+                </aside>
+             </div>
+         </div>
+     </section>
+{% endblock %}

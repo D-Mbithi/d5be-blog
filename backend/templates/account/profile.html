@@ -6,7 +6,7 @@ My Profile - Flavor Fusion
 {% endblock title %}
 
 {% block content %}
-<main id="main">
+<section class="bg-white">
   <!-- Profile Header Hero Section -->
   <section class="relative bg-gradient-to-r from-purple-50 via-white to-zinc-100 pt-16 pb-12 overflow-hidden">
     <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmMWY1ZmEiIGZpbGwtb3BhY2l0eT0iMC40Ij48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-20">
@@ -18,8 +18,8 @@ My Profile - Flavor Fusion
           <div class="relative">
             <div class="absolute -top-4 -left-4 w-20 h-20 bg-purple-500/10 rounded-full blur-2xl"></div>
             <div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow-2xl ring-4 ring-white border-4 border-purple-100">
-              {% if profile.user.profile_pic %}
-                <img src="{{ profile.user.profile_pic.url }}" alt="{{ profile.user.get_full_name }}"
+              {% if profile.profile_pic %}
+                <img src="{{ profile.profile_pic.url }}" alt="{{ profile.user.get_full_name }}"
                   class="w-full h-full object-cover">
               {% else %}
                 <div class="w-full h-full bg-gradient-to-br from-purple-400 to-fuchsia-500 flex items-center justify-center">
@@ -27,29 +27,21 @@ My Profile - Flavor Fusion
                 </div>
               {% endif %}
             </div>
-            <button onclick="document.getElementById('avatar-upload').click()"
-              class="absolute bottom-0 right-0 w-8 h-8 bg-purple-600 text-white rounded-full shadow-lg hover:bg-purple-700 transition-colors flex items-center justify-center"
-              aria-label="Change profile picture">
-              <i class="fas fa-camera text-sm"></i>
-            </button>
           </div>
 
           <!-- Profile Info -->
           <div class="flex-1">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <h1 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-2">
+                <h1 class="text-4xl md:text-5xl font-bold text-zinc-900 mb-2 capitalize">
                   {{ profile.user.get_full_name|default:profile.user.username }}
                 </h1>
                 <p class="text-lg text-zinc-600 flex items-center gap-2">
                   <i class="fas fa-envelope text-purple-600"></i>
                   {{ profile.user.email }}
                 </p>
-                {% if profile.bio %}
-                  <p class="text-zinc-700 mt-3 leading-relaxed max-w-lg">{{ profile.bio }}</p>
-                {% endif %}
               </div>
-              <a href="#edit-profile"
+              <a href="{% url 'accounts:edit_profile' profile.id %}"
                 class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white px-6 py-3 rounded-xl hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 transform hover:scale-105 font-medium shadow-lg flex items-center justify-center space-x-2 focus:outline-none focus:ring-2 focus:ring-purple-300 w-fit">
                 <i class="fas fa-edit"></i>
                 <span>Edit Profile</span>
@@ -59,7 +51,7 @@ My Profile - Flavor Fusion
             <!-- Stats -->
             <div class="flex gap-6 md:gap-10 mt-6 pt-6 border-t border-zinc-200">
               <div>
-                <p class="text-2xl md:text-3xl font-bold text-purple-600">0</p>
+                <p class="text-2xl md:text-3xl font-bold text-purple-600">{% if count %}{{ count }}{% else %}0{% endif %}</p>
                 <p class="text-sm text-zinc-600">Recipes Created</p>
               </div>
               <div>
@@ -72,164 +64,6 @@ My Profile - Flavor Fusion
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Edit Profile Section -->
-  <section id="edit-profile" class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <div class="bg-white rounded-2xl shadow-xl border border-zinc-100 p-8 animate-fade-in">
-          <h2 class="text-3xl font-bold text-zinc-900 mb-8 flex items-center gap-3">
-            <i class="fas fa-user-circle text-purple-600"></i>
-            Edit Your Profile
-          </h2>
-
-          <form method="post" enctype="multipart/form-data" class="space-y-8">
-            {% csrf_token %}
-
-            <!-- Error Messages -->
-            {% if form.non_field_errors %}
-            <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded">
-              <div class="flex">
-                <div class="flex-shrink-0">
-                  <i class="fas fa-exclamation-circle text-red-400 text-lg"></i>
-                </div>
-                <div class="ml-3">
-                  <ul class="text-sm text-red-700 space-y-1">
-                    {% for error in form.non_field_errors %}
-                      <li>{{ error }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-
-            <!-- Personal Information Section -->
-            <div class="border-b border-zinc-200 pb-8">
-              <h3 class="text-lg font-semibold text-zinc-900 mb-6 flex items-center gap-2">
-                <i class="fas fa-file-alt text-purple-600"></i>
-                Personal Information
-              </h3>
-              <div class="grid md:grid-cols-2 gap-6">
-                <!-- First Name -->
-                <div>
-                  <label for="id_first_name" class="block text-sm font-medium text-zinc-700 mb-2">
-                    First Name
-                  </label>
-                  {{ form.first_name|add_class:"w-full px-4 py-3 border border-zinc-300 rounded-lg shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" }}
-                  {% if form.first_name.errors %}
-                    <div class="mt-2 text-sm text-red-600 space-y-1">
-                      {% for error in form.first_name.errors %}
-                        <p>{{ error }}</p>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                </div>
-
-                <!-- Last Name -->
-                <div>
-                  <label for="id_last_name" class="block text-sm font-medium text-zinc-700 mb-2">
-                    Last Name
-                  </label>
-                  {{ form.last_name|add_class:"w-full px-4 py-3 border border-zinc-300 rounded-lg shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" }}
-                  {% if form.last_name.errors %}
-                    <div class="mt-2 text-sm text-red-600 space-y-1">
-                      {% for error in form.last_name.errors %}
-                        <p>{{ error }}</p>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                </div>
-
-                <!-- Email -->
-                <div>
-                  <label for="id_email" class="block text-sm font-medium text-zinc-700 mb-2">
-                    Email Address
-                  </label>
-                  {{ form.email|add_class:"w-full px-4 py-3 border border-zinc-300 rounded-lg shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" }}
-                  {% if form.email.errors %}
-                    <div class="mt-2 text-sm text-red-600 space-y-1">
-                      {% for error in form.email.errors %}
-                        <p>{{ error }}</p>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                </div>
-
-                <!-- Username -->
-                <div>
-                  <label for="id_username" class="block text-sm font-medium text-zinc-700 mb-2">
-                    Username
-                  </label>
-                  {{ form.username|add_class:"w-full px-4 py-3 border border-zinc-300 rounded-lg shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all" }}
-                  {% if form.username.errors %}
-                    <div class="mt-2 text-sm text-red-600 space-y-1">
-                      {% for error in form.username.errors %}
-                        <p>{{ error }}</p>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-
-            <!-- Bio Section -->
-            <div class="border-b border-zinc-200 pb-8">
-              <h3 class="text-lg font-semibold text-zinc-900 mb-6 flex items-center gap-2">
-                <i class="fas fa-pen-fancy text-purple-600"></i>
-                About You
-              </h3>
-              <div>
-                <label for="id_bio" class="block text-sm font-medium text-zinc-700 mb-2">
-                  Biography
-                  <span class="text-zinc-500 text-xs ml-1">(Optional)</span>
-                </label>
-                <textarea id="id_bio" name="bio" rows="5"
-                  class="w-full px-4 py-3 border border-zinc-300 rounded-lg shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all"
-                  placeholder="Tell us about yourself, your culinary interests, and favorite cuisines...">{{ form.bio.value|default:'' }}</textarea>
-                <p class="mt-2 text-xs text-zinc-500">Share your cooking journey and food preferences</p>
-                {% if form.bio.errors %}
-                  <div class="mt-2 text-sm text-red-600 space-y-1">
-                    {% for error in form.bio.errors %}
-                      <p>{{ error }}</p>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-              </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 pt-8">
-              <button type="submit"
-                class="flex-1 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white py-3 px-6 rounded-lg hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 transform hover:scale-105 font-semibold shadow-lg flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-purple-300">
-                <i class="fas fa-save"></i>
-                <span>Save Changes</span>
-              </button>
-              <a href="{% url 'account_change_password' %}"
-                class="flex-1 border-2 border-purple-600 text-purple-600 py-3 px-6 rounded-lg hover:bg-purple-50 transition-all duration-300 font-semibold flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-purple-300">
-                <i class="fas fa-key"></i>
-                <span>Change Password</span>
-              </a>
-            </div>
-          </form>
-        </div>
-
-        <!-- Danger Zone -->
-        <div class="mt-12 bg-red-50 rounded-2xl border-2 border-red-200 p-8 animate-fade-in">
-          <h3 class="text-xl font-bold text-red-900 mb-4 flex items-center gap-2">
-            <i class="fas fa-exclamation-triangle"></i>
-            Danger Zone
-          </h3>
-          <p class="text-red-700 mb-6">Once you delete your account, there is no going back. Please be certain.</p>
-          <button type="button" onclick="if(confirm('Are you sure you want to delete your account? This action cannot be undone.')) { document.getElementById('delete-form').submit(); }"
-            class="bg-red-600 text-white py-2 px-6 rounded-lg hover:bg-red-700 transition-all duration-300 font-medium flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-red-300">
-            <i class="fas fa-trash-alt"></i>
-            <span>Delete Account</span>
-          </button>
         </div>
       </div>
     </div>
@@ -262,24 +96,5 @@ My Profile - Flavor Fusion
       </div>
     </div>
   </section>
-
-  <!-- Hidden file input for avatar upload -->
-  <input type="file" id="avatar-upload" class="hidden" accept="image/*">
-</main>
-
-<script>
-  // Avatar upload preview (optional enhancement)
-  document.getElementById('avatar-upload').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function() {
-        // You could preview the image here before upload
-        console.log('File selected:', file.name);
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-</script>
-
+</section>
 {% endblock content %}

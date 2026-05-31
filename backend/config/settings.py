@@ -37,8 +37,11 @@ THIRD_PARTY_APPS = [
     "widget_tweaks",
     "allauth",
     "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "taggit",
     "django_tasks_db",
+    "anymail"
 ]
 
 PROJECT_APPS = [
@@ -53,6 +56,7 @@ if DEBUG:
         "silk",
         "django_seed",
         "django_extensions",
+        "django_browser_reload",
     ]
 
 
@@ -67,6 +71,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 if DEBUG:
@@ -149,16 +154,23 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/"
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+SITE_ID=1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID=1
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+
+ANYMAIL = {
+    "RESEND_API_KEY": env.str("RESEND_API_KEY"),
+}
+DEFAULT_FROM_EMAIL = "onboarding@resend.dev"
 
 
 TASKS = {

@@ -7,7 +7,7 @@ The platform should support:
 - [ ] Ingredient management
 - [ ] Categories and tags
 - [ ] Search and filtering
-- [ ] User accounts
+- [x] User accounts
 - [ ] Comments and ratings
 - [ ] Favorites/bookmarks
 - [ ] Meal planning
@@ -45,7 +45,7 @@ The platform should support:
 2. [x] Login/logout
 3. [x] Email verification
 4. [x] Password reset
-5. [ ] OAuth login
+5. [x] OAuth login
 6. [x] Profile management
 
 ## 2. Recipe Management Module

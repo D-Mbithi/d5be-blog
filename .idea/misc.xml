@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
+    <option name="executionMode" value="BINARY" />
+    <option name="pathToExecutable" value="$USER_HOME$/anaconda3/bin/black" />
     <option name="sdkName" value="Pipenv (d5be-blog)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Pipenv (d5be-blog)" project-jdk-type="Python SDK" />

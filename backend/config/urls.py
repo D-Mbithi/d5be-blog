@@ -9,8 +9,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.post_list, name="index"),
     path("accounts/", include("allauth.urls")),
-    path("accounts/", include("apps.users.urls", namespace='accounts')),
+    path("accounts/", include("apps.users.urls", namespace="accounts")),
     path("recipes/", include("apps.blog.urls", namespace="blog")),
+    path("", include("social_django.urls", namespace="social")),
 ]
 
 urlpatterns += [

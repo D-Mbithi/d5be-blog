@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RuffConfiguration">
+    <option name="enabled" value="true" />
+    <option name="sdkName" value="Python 3.12 (base)" />
+  </component>
+  <component name="RuffModuleSettingsStorage">
+    <option name="moduleSettings">
+      <map>
+        <entry key="backend">
+          <value>
+            <RuffModuleSettingsData>
+              <option name="enabled" value="true" />
+              <option name="sdkName" value="Python 3.12 (base)" />
+            </RuffModuleSettingsData>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
